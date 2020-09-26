@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './styleApp.css';
 //https://sujeitoprogramador.com/rn-api/?api=posts
 
 export default class App extends Component {
@@ -20,12 +21,20 @@ export default class App extends Component {
     }
     render(){
       return(
-        <div>
+        <div className="container">
+          <div className="contianerFIlho">
             {this.state.responseHTTP.map((item)=>{
               return(
-                <h4>{item.titulo}</h4>
+              <div>
+               <article key={item.id}>
+                    <strong>{item.titulo}</strong>
+                    <img src={item.capa}/>
+                    <p>{item.subtitulo}</p>
+                </article>
+                </div>
               )
             })}
+            </div>
         </div>
       );
     }

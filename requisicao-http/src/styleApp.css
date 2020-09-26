@@ -1,0 +1,42 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.contianerFIlho{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 900px;
+    background-color: rgb(253, 244, 244);
+    border-radius: 10px;
+    margin: 20px;
+}
+.contianerFIlho div{
+    background-color: rgb(175, 153, 153);
+    margin: 20px;
+    border-radius: 15px;
+
+}
+.contianerFIlho article{
+    background-color: blur;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+.contianerFIlho img{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: auto;
+    padding: 5px;
+    border-radius: 15px;
+}
+.contianerFIlho strong{
+    font-size: 20px;
+    text-transform: uppercase;
+}
