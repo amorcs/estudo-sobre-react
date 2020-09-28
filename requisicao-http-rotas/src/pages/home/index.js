@@ -29,7 +29,7 @@ class Home extends Component {
                             <article key={filme.id}>
                                 <strong>{filme.nome}</strong>
                                 <img src={filme.foto}/>
-                                <HashLink to="/">Acessar</HashLink>
+                                <HashLink to={`/filme/${filme.id}`}>Acessar</HashLink>
                             </article>
                             
                         </div>
