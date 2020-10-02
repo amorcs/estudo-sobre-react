@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import TodoItem from '../todoItem';
-
+import './todoForm.css';
 class TodoForm extends Component {
     constructor(props) {
         super(props);
@@ -43,7 +43,7 @@ class TodoForm extends Component {
     }
     render() {
         return (
-            <div>
+            <div className='container'>
                 <div>
                     <h3>Formulário</h3>
                     <form onSubmit={this.cadastrar}>
@@ -55,11 +55,11 @@ class TodoForm extends Component {
                                 onChange={(e)=>{this.setState({datahora:e.target.value})}}
                                 ref={(e)=> this._inputDataHora = e}/>
                         <br />
-                        <button type="submit">cadastrar</button>
+                        <button id="butão01" type="submit">cadastrar</button>
                         
                     </form>
                 </div>
-                <div>
+                <div >
                     <TodoItem />
                 </div>
             </div>

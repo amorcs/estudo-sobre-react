@@ -1,0 +1,31 @@
+.containerOl{
+    display: block;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #DDD;
+    border-radius: 5px;
+    padding: 10px;
+    border-radius: 5px;
+}
+.containerOl li{
+    display: flex;
+    
+    margin: 5px;
+    padding: 5px;
+    justify-content: space-between;
+    border: 1px solid rgb(129, 190, 246);
+    border-radius: 5px;
+
+}
+li strong{
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(129, 190, 246);
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-left: 10px;
+    padding: 5px;
+    text-transform: uppercase;
+    
+}

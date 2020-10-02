@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
-
+import './todoItem.css';
 class TodoItem extends Component{
     constructor(props) {
         super(props);
@@ -32,14 +32,14 @@ class TodoItem extends Component{
     }
     render() {
         return (
-            <div>
-                <ol>
+            <div >
+                <ol className="containerOl">
                     {this.state.lista.map((item)=>{
                         return(
-                            <div key={item.key}>
+                            <div key={item.key} className="containerList">
                                 <li> 
-                                    Data/Hora: <strong>{item.datahora}</strong> / 
-                                    Tarefa:<strong> {item.nome}</strong> ->  
+                                    Data/Hora: <strong>{item.datahora}</strong>  
+                                    Tarefa:<strong> {item.nome}</strong>  
                                     <button onClick={()=>this.deletar(item.key)}>Deletar</button>
                                 </li>
                             </div>
