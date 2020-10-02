@@ -7,6 +7,7 @@ class TodoItem extends Component{
         this.state={
             lista:[],
         }
+        this.deletar=this.deletar.bind(this);
     }
     componentDidMount(){
         
@@ -25,6 +26,10 @@ class TodoItem extends Component{
         })
        
     }
+    deletar(key){
+        console.log(key);
+        firebase.database().ref('tarefas').child(key).remove();
+    }
     render() {
         return (
             <div>
@@ -34,7 +39,8 @@ class TodoItem extends Component{
                             <div key={item.key}>
                                 <li> 
                                     Data/Hora: <strong>{item.datahora}</strong> / 
-                                    Tarefa:<strong> {item.nome}</strong>
+                                    Tarefa:<strong> {item.nome}</strong> ->  
+                                    <button onClick={()=>this.deletar(item.key)}>Deletar</button>
                                 </li>
                             </div>
                         )
