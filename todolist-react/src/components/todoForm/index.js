@@ -2,15 +2,14 @@ import React, { Component } from 'react';
 import firebase from 'firebase';
 import TodoItem from '../todoItem';
 
-class TodoForm extends Component{
+class TodoForm extends Component {
     constructor(props) {
         super(props);
         this.state={
             nome:'',
-            lista:[],
+            datahora:'',
         }
-        this.cadastrar=this.cadastrar.bind(this);
-
+        //configuração do Firebase//
         var firebaseConfig = {
             apiKey: "AIzaSyBt0NWQ7YLf7FygxsO579M1qNkJKKTfQg4",
             authDomain: "tolist-react.firebaseapp.com",
@@ -20,51 +19,48 @@ class TodoForm extends Component{
             messagingSenderId: "863127705925",
             appId: "1:863127705925:web:4b5767bb31610152c4862c",
             measurementId: "G-YCXQXBR4KB"
-        };
+          };
           // Initialize Firebase
         if(!firebase.apps.length){
             firebase.initializeApp(firebaseConfig);
-        };
-
-        firebase.database().ref('tarefas').on('value', (snapshot)=>{
-            let state = this.state;
-            state.lista = [];
-              snapshot.forEach((childItem)=>{
-                  state.lista.push({
-                    key:childItem.key,
-                    nome: childItem.val().nome,
-                  })
-              })
-              this.setState(state);
-        })
+        }
+        //término da configuração;
+        //bind de funções 
+        this.cadastrar=this.cadastrar.bind(this);
 
     }
     cadastrar(event){
-        let state=this.state;
-        if(this._inputValue.value!==''){
+        if(this._inputNome.value!=='' && this._inputDataHora.value!==''){
             let tarefas = firebase.database().ref('tarefas');
-            let key = tarefas.push().key;
-
-            tarefas.child(key).set({
-            nome:this.state.nome,
-        })}
-        this.setState(state)
-        this.setState({nome:''})
+                let key = Date.now();
+                tarefas.child(key).set({
+                    nome: this.state.nome,
+                    datahora: this.state.datahora,
+                })
+        }
+        this.setState({nome:'', datahora:''})
         event.preventDefault();
     }
     render() {
         return (
             <div>
                 <div>
+                    <h3>Formulário</h3>
                     <form onSubmit={this.cadastrar}>
-                        <input value={this.state.nome}
+                        Tarefa:<input value={this.state.nome}
                                 onChange={(e)=>{this.setState({nome:e.target.value})}}
-                                ref={(e)=>this._inputValue = e}/>
+                                ref={(e)=> this._inputNome = e}/>
+                        <br />
+                        Data/Hora<input type="datetime-local" value={this.state.datahora}
+                                onChange={(e)=>{this.setState({datahora:e.target.value})}}
+                                ref={(e)=> this._inputDataHora = e}/>
+                        <br />
                         <button type="submit">cadastrar</button>
+                        
                     </form>
                 </div>
                 <div>
-                    <TodoItem listaTarefas={this.state.lista} />
+                    <TodoItem />
                 </div>
             </div>
         );
