@@ -1,4 +1,4 @@
-import React, { Children, Component } from 'react';
+import React, { Component } from 'react';
 import firebase from './authConfig.js';
 
 class App extends Component {
@@ -11,17 +11,19 @@ class App extends Component {
       }
       this.cadastrar=this.cadastrar.bind(this)
     }
-    componentDidMount(){
-          firebase.database().ref('usuarios').child(1).on('value', (snapshot)=>{
-                snapshot.forEach((childItem)=>{
-                  console.log(childItem.val())
-                })
-          })
-    }
-
     cadastrar(event){
-      
-      event.preventDefault();
+        firebase.auth()
+            .createUserWithEmailAndPassword(this.state.email, this.state.senha)
+                .catch((error)=>{
+                  //tratamento de erro
+                    if(error.code === 'auth/invalid-email'){
+                        alert('Email Inválido!')
+                    }
+                    if(error.code === 'auth/weak-password'){
+                      alert('Senha fraca!')
+                    }
+                });
+        event.preventDefault();
     }
     
     render() {
