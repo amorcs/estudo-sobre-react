@@ -6,28 +6,44 @@ class Home extends Component {
         super(props);
 
         this.state={
-            nome:'',
+            user:'',
             email:'',
             senha:'',
         }
         this.cadastrar=this.cadastrar.bind(this);
-        
+        this.logar=this.logar.bind(this);
+        this.auth=this.auth.bind(this);
+        this.sair=this.sair.bind(this);
     }
-
+    sair(){
+        firebase.auth().signOut()
+        .then(()=>{
+            this.setState({user:''});
+            alert('usuario saiu');
+        }).catch((error)=>{
+            alert(error.code)
+        });
+    }
     componentDidMount(){
-        firebase.auth().signOut();
-        console.log(this.state.nome);
+        this.auth();
+    }
+    auth(){
         firebase.auth().onAuthStateChanged((user)=>{
             if(user){
-                firebase.database().ref('usuarios').child(user.uid).set({
-                    nome:this.state.nome,
-                }).then(()=>{
-                    this.setState({nome:'',email:'',senha:''})
-                });
+                this.setState({user:user})
+                console.log(this.state.user);
             }
         })
     }
-    cadastrar(e){
+
+    
+    logar(){
+        firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.senha)
+        .catch((error)=>{
+            alert(error.code);
+        });
+    }
+    cadastrar(){
         firebase.auth()
             .createUserWithEmailAndPassword(this.state.email, this.state.senha)
             .catch((error)=>{
@@ -39,32 +55,38 @@ class Home extends Component {
                 }
             });
 
-
-        e.preventDefault();
     }
     
     render() {
 
         return (
             <div>
-                <h3>Formulário</h3>
-                <label>Nome</label><br />
-                <form onSubmit={(e)=>this.cadastrar(e)}>
-                    <input value={this.state.nome}
-                            onChange={(e)=>{this.setState({nome:e.target.value})}}/>
-                <br />
-                <label>e-mail</label>
-                <br />
-                    <input value={this.state.email}
-                            onChange={(e)=>{this.setState({email:e.target.value})}}/>
-                <br />
-                <label>senha</label>
-                <br />
-                    <input value={this.state.senha}
-                            onChange={(e)=>{this.setState({senha:e.target.value})}}/>
-                <br />            
-                    <button type="submit">cadastrar</button>
-                </form>
+                {this.state.user
+                ?
+                <div>
+                    <p>{this.state.user.email}</p>
+                    <p>Painel Admin</p>
+                    <p>seja bem vindo !</p>
+                    <button onClick={this.sair}>sair</button>
+                </div>
+                :
+                <div>
+                    <h3>Seja bem vindo!</h3>
+                
+                    <label>e-mail</label>
+                    <br />
+                        <input value={this.state.email}
+                                onChange={(e)=>{this.setState({email:e.target.value})}}/>
+                    <br />
+                    <label>senha</label>
+                    <br />
+                        <input value={this.state.senha}
+                                onChange={(e)=>{this.setState({senha:e.target.value})}}/>
+                    <br />            
+                        <button onClick={this.cadastrar}>cadastrar</button>
+                        <button onClick={this.logar}>logar</button>
+                </div>
+                }
 
             </div>
         );
