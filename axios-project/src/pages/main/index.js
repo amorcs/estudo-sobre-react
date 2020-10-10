@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import api from '../../service/api.js';
-import './styles.css';
+import api from '../../service/api';
 
 class Main extends Component{
     constructor(props) {
@@ -8,22 +7,28 @@ class Main extends Component{
         this.state={
             user:{}
         }
+        this.loadUrl=this.loadUrl.bind(this);
     }
     componentDidMount(){
         this.loadUrl();
     }
     async loadUrl(){
         let nome = 'amorcs'
-        const response = await api.get(`/${nome}`);
+        let response = await api.get(`/${ nome }`)
         this.setState({user: response.data})
-        console.log(this.state.user.id);
+        console.log(this.state.user)
     }
+
     render() {
+        const { login, avatar_url } = this.state.user;
         return (
             <div>
-                olá 
+                
+                <strong>{login}</strong>
+                <img src={avatar_url}/>
             </div>
         );
     }
 }
+
 export default Main;
